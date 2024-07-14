@@ -1,26 +1,50 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { DatabaseService } from 'src/database/database.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class TodoService {
-  create(createTodoDto: CreateTodoDto) {
-    return 'This action adds a new todo';
+  constructor(private readonly databaseService: DatabaseService) {}
+
+  async create(createTodoDto: CreateTodoDto) {
+    try {
+      const data: Prisma.TodoCreateInput = {
+        description: createTodoDto.description,
+        task: createTodoDto.task,
+        status: 'Active',
+      };
+      console.log('input : ', data)
+      return await this.databaseService.todo.create({ data });
+    } catch (error) {
+      return error;
+    }
   }
 
-  findAll() {
-    return `This action returns all todo`;
+  async findAll() {
+    return await this.databaseService.todo.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} todo`;
+  async findOne(id: number) {
+    return await this.databaseService.todo.findUnique({
+      where: { id },
+    });
   }
 
-  update(id: number, updateTodoDto: UpdateTodoDto) {
-    return `This action updates a #${id} todo`;
+  async update(id: number, updateTodoDto: UpdateTodoDto) {
+    return await this.databaseService.todo.update({
+      where: { id },
+      data: {
+        ...updateTodoDto,
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} todo`;
+  async remove(id: number) {
+    return await this.databaseService.todo.delete({
+      where: { id },
+    });
   }
 }
