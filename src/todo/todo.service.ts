@@ -15,36 +15,62 @@ export class TodoService {
         description: createTodoDto.description,
         task: createTodoDto.task,
         status: 'Active',
+        user: {
+          connect: {
+            email: createTodoDto.userEmail,
+          },
+        },
       };
-      console.log('input : ', data)
+      console.log('input : ', data);
       return await this.databaseService.todo.create({ data });
     } catch (error) {
-      return error;
+      console.error('Error creating todo:', error);
+      throw error;
     }
   }
 
   async findAll() {
-    return await this.databaseService.todo.findMany();
+    try {
+      return await this.databaseService.todo.findMany();
+    } catch (error) {
+      console.error('Error finding todos:', error);
+      throw error;
+    }
   }
 
   async findOne(id: number) {
-    return await this.databaseService.todo.findUnique({
-      where: { id },
-    });
+    try {
+      return await this.databaseService.todo.findUnique({
+        where: { id },
+      });
+    } catch (error) {
+      console.error('Error finding todo:', error);
+      throw error;
+    }
   }
 
   async update(id: number, updateTodoDto: UpdateTodoDto) {
-    return await this.databaseService.todo.update({
-      where: { id },
-      data: {
-        ...updateTodoDto,
-      },
-    });
+    try {
+      return await this.databaseService.todo.update({
+        where: { id },
+        data: {
+          ...updateTodoDto,
+        },
+      });
+    } catch (error) {
+      console.error('Error updating todo:', error);
+      throw error;
+    }
   }
 
   async remove(id: number) {
-    return await this.databaseService.todo.delete({
-      where: { id },
-    });
+    try {
+      return await this.databaseService.todo.delete({
+        where: { id },
+      });
+    } catch (error) {
+      console.error('Error deleting todo:', error);
+      throw error;
+    }
   }
 }
