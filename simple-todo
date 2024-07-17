@@ -1,0 +1,9 @@
+# Created by Vercel CLI
+POSTGRES_DATABASE="verceldb"
+POSTGRES_HOST="ep-bitter-rice-a1r1wod9-pooler.ap-southeast-1.aws.neon.tech"
+POSTGRES_PASSWORD="fdTC2vq6uzPM"
+POSTGRES_PRISMA_URL="postgres://default:fdTC2vq6uzPM@ep-bitter-rice-a1r1wod9-pooler.ap-southeast-1.aws.neon.tech/verceldb?pgbouncer=true&connect_timeout=15&sslmode=require"
+POSTGRES_URL="postgres://default:fdTC2vq6uzPM@ep-bitter-rice-a1r1wod9-pooler.ap-southeast-1.aws.neon.tech/verceldb?sslmode=require"
+POSTGRES_URL_NON_POOLING="postgres://default:fdTC2vq6uzPM@ep-bitter-rice-a1r1wod9.ap-southeast-1.aws.neon.tech/verceldb?sslmode=require"
+POSTGRES_URL_NO_SSL="postgres://default:fdTC2vq6uzPM@ep-bitter-rice-a1r1wod9-pooler.ap-southeast-1.aws.neon.tech/verceldb"
+POSTGRES_USER="default"
