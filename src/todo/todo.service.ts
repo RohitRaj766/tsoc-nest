@@ -9,7 +9,7 @@ import { Prisma } from '@prisma/client';
 export class TodoService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async create(createTodoDto: CreateTodoDto) {
+  async create(createTodoDto: CreateTodoDto, email:string) {
     try {
       const data: Prisma.TodoCreateInput = {
         description: createTodoDto.description,
@@ -17,7 +17,7 @@ export class TodoService {
         status: 'Active',
         user: {
           connect: {
-            email: createTodoDto.userEmail,
+            email: email,
           },
         },
       };
@@ -29,9 +29,13 @@ export class TodoService {
     }
   }
 
-  async findAll() {
+  async findAll(userEmail: string) {
     try {
-      return await this.databaseService.todo.findMany();
+      return await this.databaseService.todo.findMany({
+        where: {
+          userEmail: userEmail,
+        },
+      });
     } catch (error) {
       console.error('Error finding todos:', error);
       throw error;
